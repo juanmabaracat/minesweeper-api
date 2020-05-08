@@ -3,9 +3,9 @@ package game
 type Mark string
 
 const (
-	FLAG     Mark = "FLAG"
-	QUESTION Mark = "QUESTION"
-	NONE     Mark = "NONE"
+	FLAG     Mark = "flag"
+	QUESTION Mark = "question"
+	NONE     Mark = "none"
 )
 
 type Cells []Cell
@@ -15,5 +15,5 @@ type Cell struct {
 	Y           int  `json:"Y"`
 	HasMine     bool `json:"has_mine"`
 	WasRevealed bool `json:"was_revealed"`
-	Mark        Mark `json:"Mark"`
+	Mark        Mark `json:"mark"`
 }

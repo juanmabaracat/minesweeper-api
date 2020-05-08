@@ -6,7 +6,7 @@ import (
 )
 
 func TestCellConstants(t *testing.T) {
-	assert.EqualValues(t, "FLAG", FLAG)
-	assert.EqualValues(t, "QUESTION", QUESTION)
-	assert.EqualValues(t, "NONE", NONE)
+	assert.EqualValues(t, "flag", FLAG)
+	assert.EqualValues(t, "question", QUESTION)
+	assert.EqualValues(t, "none", NONE)
 }

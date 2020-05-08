@@ -56,7 +56,7 @@ func (s *gameService) Update(isPartial bool, gameRequest *game.Game) error {
 		current.DateFinished = utils.GetNowString()
 	}
 
-	gameRequest = current
+	*gameRequest = *current
 	return s.repository.Update(current)
 }
 

@@ -6,9 +6,9 @@ import (
 )
 
 func TestGameConstants(t *testing.T) {
-	assert.EqualValues(t, "PLAYING", PLAYING)
-	assert.EqualValues(t, "WON", WON)
-	assert.EqualValues(t, "DEFEATED", DEFEATED)
+	assert.EqualValues(t, "playing", PLAYING)
+	assert.EqualValues(t, "won", WON)
+	assert.EqualValues(t, "defeated", DEFEATED)
 }
 
 func TestCreateGame(t *testing.T) {

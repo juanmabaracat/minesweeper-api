@@ -7,9 +7,9 @@ import (
 type Status string
 
 const (
-	WON      Status = "WON"
-	PLAYING  Status = "PLAYING"
-	DEFEATED Status = "DEFEATED"
+	WON      Status = "won"
+	PLAYING  Status = "playing"
+	DEFEATED Status = "defeated"
 )
 
 func NewGame() *Game {
@@ -20,7 +20,7 @@ type Game struct {
 	Id           uint64 `json:"id"`
 	PlayerId     uint64 `json:"player_id"`
 	Status       Status `json:"status"`
-	Board        *Board `json:"Board"`
+	Board        *Board `json:"board"`
 	DateCreated  string `json:"date_created"`
 	DateFinished string `json:"date_finished"`
 }
