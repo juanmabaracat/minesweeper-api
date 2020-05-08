@@ -43,7 +43,7 @@ func (handler gameHandler) Create(c *gin.Context) {
 		return
 	}
 
-	c.JSON(http.StatusOK, newGame)
+	c.JSON(http.StatusCreated, newGame)
 }
 
 func (handler gameHandler) Update(c *gin.Context) {
