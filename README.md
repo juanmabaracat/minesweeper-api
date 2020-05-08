@@ -4,25 +4,15 @@ Minesweeper API implementation to create and save games.
 ## Notes
 This API is designed to provide a client with the possibility of logging in users, creating new games, saving them 
 and being able to obtain a list of the player's games.
-Given the time available for the challenge, some parts were left out.
 
 ### Technical details:
 - Hexagonal Architecture
 - gin-gonic: HTTP web framework
-- Go Modules: dependencies management
+- Go Modules: dependency management
 - Testify: testing tool
 - Mockery: A mock code autogenerator for golang
 - In memory DB
 - Docker
-
-What was left:
-- frontend using react library
-- JWT authentication
-- CassandraDB
-- gocql: Cassandra client for Go
-- Docker compose to bundle database and application
-- Deploy in AWS
-- Some details like limiting board size, more test coverage, some endpoints.
 
 ### Endpoints
 
@@ -52,7 +42,7 @@ $docker run -p 8080:8080 minesweeper-api:latest
 ### Create a new game
 ### POST `/minesweeper/api/game`
 ```
-curl -i -X POST '127.0.0.1:8080/minesweeper/api/game' -d '{"player_id": 123, "width": 3, "height": 3, "mines": 2}
+curl -i -X POST '127.0.0.1:8080/minesweeper/api/game' -d '{"player_id": 123, "width": 2, "height": 2, "mines": 1}
 ```
 
 #### Request body example
@@ -60,89 +50,181 @@ curl -i -X POST '127.0.0.1:8080/minesweeper/api/game' -d '{"player_id": 123, "wi
 
 {
 	"player_id": 123,
-	"width": 3,
-	"height": 3,
-	"mines": 2
+	"width": 2,
+	"height": 2,
+	"mines": 1
 }
 ```
 
 #### Response
 ```
 {
-    "id": 979070430525095337,
+    "id": 15777586166085368371,
     "player_id": 123,
-    "status": "PLAYING",
-    "Board": {
-        "width": 3,
-        "height": 3,
-        "mines": 2,
+    "status": "playing",
+    "board": {
+        "width": 2,
+        "height": 2,
+        "mines": 1,
         "cells": [
             {
                 "X": 0,
                 "Y": 0,
-                "has_mine": false,
+                "has_mine": true,
                 "was_revealed": false,
-                "Mark": "NONE"
+                "mark": "none"
             },
             {
                 "X": 0,
                 "Y": 1,
                 "has_mine": false,
                 "was_revealed": false,
-                "Mark": "NONE"
-            },
-            {
-                "X": 0,
-                "Y": 2,
-                "has_mine": false,
-                "was_revealed": false,
-                "Mark": "NONE"
+                "mark": "none"
             },
             {
                 "X": 1,
                 "Y": 0,
                 "has_mine": false,
                 "was_revealed": false,
-                "Mark": "NONE"
+                "mark": "none"
             },
             {
                 "X": 1,
                 "Y": 1,
                 "has_mine": false,
                 "was_revealed": false,
-                "Mark": "NONE"
-            },
-            {
-                "X": 1,
-                "Y": 2,
-                "has_mine": false,
-                "was_revealed": false,
-                "Mark": "NONE"
-            },
-            {
-                "X": 2,
-                "Y": 0,
-                "has_mine": true,
-                "was_revealed": false,
-                "Mark": "NONE"
-            },
-            {
-                "X": 2,
-                "Y": 1,
-                "has_mine": false,
-                "was_revealed": false,
-                "Mark": "NONE"
-            },
-            {
-                "X": 2,
-                "Y": 2,
-                "has_mine": true,
-                "was_revealed": false,
-                "Mark": "NONE"
+                "mark": "none"
             }
         ]
     },
-    "date_created": "2020-05-08T16:12:10Z",
+    "date_created": "2020-05-08T17:51:33Z",
     "date_finished": ""
+}
+```
+
+### Save game
+### PUT `/minesweeper/api/game/:game_id`
+```
+curl -i -X PUT '127.0.0.1:8080/minesweeper/api/game/15777586166085368371' -d {"status": "playing", "board": {...} }
+```
+
+#### Request body example
+```
+{
+    "status": "playing",
+    "board": {
+        "width": 2,
+        "height": 2,
+        "mines": 1,
+        "cells": [
+            {
+                "X": 0,
+                "Y": 0,
+                "has_mine": true,
+                "was_revealed": false,
+                "mark": "none"
+            },
+            {
+                "X": 0,
+                "Y": 1,
+                "has_mine": false,
+                "was_revealed": true,
+                "mark": "none"
+            },
+            {
+                "X": 1,
+                "Y": 0,
+                "has_mine": false,
+                "was_revealed": true,
+                "mark": "none"
+            },
+            {
+                "X": 1,
+                "Y": 1,
+                "has_mine": false,
+                "was_revealed": false,
+                "mark": "none"
+            }
+        ]
+    }
+}
+```
+
+### Get a game
+### GET `/minesweeper/api/game/:game_id`
+```
+curl -i -X GET '127.0.0.1:8080/minesweeper/api/game/15777586166085368371'
+```
+
+#### Response
+```
+{
+    "id": 15777586166085368371,
+    "player_id": 123,
+    "status": "playing",
+    "board": {
+        "width": 2,
+        "height": 2,
+        "mines": 1,
+        "cells": [
+            {
+                "X": 0,
+                "Y": 0,
+                "has_mine": true,
+                "was_revealed": false,
+                "mark": "none"
+            },
+            {
+                "X": 0,
+                "Y": 1,
+                "has_mine": false,
+                "was_revealed": true,
+                "mark": "none"
+            },
+            {
+                "X": 1,
+                "Y": 0,
+                "has_mine": false,
+                "was_revealed": true,
+                "mark": "none"
+            },
+            {
+                "X": 1,
+                "Y": 1,
+                "has_mine": false,
+                "was_revealed": false,
+                "mark": "none"
+            }
+        ]
+    },
+    "date_created": "2020-05-08T18:14:12Z",
+    "date_finished": ""
+}
+```
+
+### Change game status
+### PATCH `/minesweeper/api/game/:game_id`
+```
+curl -i -X PATCH '127.0.0.1:8080/minesweeper/api/game/15777586166085368371' -d '{"status":"won"}
+```
+
+#### Request body example
+```
+{
+	"status": "won"
+}
+```
+
+#### Response
+```
+{
+    "id": 15777586166085368371,
+    "player_id": 123,
+    "status": "won",
+    "board": {
+        ...
+    },
+    "date_created": "2020-05-08T18:13:12Z",
+    "date_finished": "2020-05-08T18:14:24Z"
 }
 ```
