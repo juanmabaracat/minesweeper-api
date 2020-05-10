@@ -1,8 +1,14 @@
 package game
 
 import (
+	"fmt"
 	"github.com/juanmabaracat/minesweeper-api/src/errors"
 	"math/rand"
+)
+
+const (
+	MAX_WIDTH_SIZE  int = 100
+	MAX_HEIGHT_SIZE int = 100
 )
 
 type Board struct {
@@ -34,6 +40,10 @@ func (b *Board) createCells() error {
 		return errors.NewBadRequestError("invalid Board size")
 	}
 
+	if b.Width > MAX_WIDTH_SIZE || b.Height > MAX_HEIGHT_SIZE {
+		return errors.NewBadRequestError(fmt.Sprintf("Size exceeded. Maximium allowed: %d X %d", MAX_WIDTH_SIZE, MAX_HEIGHT_SIZE))
+	}
+
 	b.Cells = Cells{}
 	for i := 0; i < b.Width; i++ {
 		for j := 0; j < b.Height; j++ {
@@ -50,7 +60,7 @@ func (b *Board) createCells() error {
 }
 
 func (b *Board) plantMines() error {
-	if b.Mines <= 0 || b.Mines > len(b.Cells) {
+	if b.Mines <= 0 || b.Mines >= len(b.Cells) {
 		return errors.NewBadRequestError("invalid mines quantity")
 	}
 

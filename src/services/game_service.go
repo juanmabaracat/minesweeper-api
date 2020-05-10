@@ -37,7 +37,7 @@ func (s *gameService) Create(request game.CreateRequest) (*game.Game, error) {
 func (s *gameService) Update(isPartial bool, gameRequest *game.Game) error {
 	current, getError := s.repository.GetById(gameRequest.Id)
 	if getError != nil {
-		return nil
+		return getError
 	}
 
 	if isPartial {
